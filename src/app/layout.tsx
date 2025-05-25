@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Barlow } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { ClerkProvider } from "@clerk/nextjs"; 
+
 // Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,11 +21,11 @@ const barlowFont = Barlow({
   variable: "--font-barlow",
 });
 
-
 //Metadata
 export const metadata: Metadata = {
   title: "Go Shop",
-  description: "Welcome to GoShop, your ultimate destination for seamless online shopping! Discover a vast collection of products from various vendors, all in one convenient place. Shop smarter, not harder!",
+  description:
+    "Welcome to GoShop, your ultimate destination for seamless online shopping! Discover a vast collection of products from various vendors, all in one convenient place. Shop smarter, not harder!",
 };
 
 export default function RootLayout({
@@ -32,19 +34,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${barlowFont.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem 
-          disableTransitionOnChange
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${barlowFont.variable} antialiased`}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
